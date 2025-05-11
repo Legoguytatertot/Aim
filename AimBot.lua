@@ -18,6 +18,7 @@ local explain = Instance.new("TextLabel")
 local ex2 = Instance.new("TextLabel")
 local st = Instance.new("TextBox")
 local hotkey = Instance.new("TextBox")
+local teams = Instance.new("TextButton")
 local drag = Instance.new("UIDragDetector")
 local strength = nil
 
@@ -63,10 +64,17 @@ local function Setup()
 	hotkey.Position = UDim2.new(0.35, 0,0.7, 0)
 	hotkey.TextScaled = true
 	hotkey.RichText = true
-	hotkey.Text = "F"
+	hotkey.Text = "NO HOTKEY"
 	hotkey.Name = "HotKey"
 	hotkey.Parent = frame
-
+	
+	teams.Size = UDim2.new(.25, 0,0.25, 0)
+	teams.Position = UDim2.new(0.7, 0,0.7, 0)
+	teams.TextScaled = true
+	teams.RichText = true
+	teams.Text = "No Teams"
+	teams.Name = "Teams"
+	teams.Parent = frame
 
 
 	drag.Parent = frame
@@ -93,10 +101,6 @@ end)
 
 
 
-
-
-
-
 local function ClosestEnemy()
 	local targetpos = nil
 	local distance = nil
@@ -105,14 +109,22 @@ local function ClosestEnemy()
 	
 	for _, rigs in pairs(Players:GetPlayers()) do
 		if rigs.Name ~= player.Character.Name and rigs.Character:FindFirstChild("HumanoidRootPart") then
+				
 			local p = rigs.Character
-			distance = (p.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
-			if distance < maxdistance then
+		
+			if teams.Text == "Teams" and rigs.Team == player.Team then
+				p = nil
+			end
+			if p then
+				distance = (p.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
+			end
+
+			
+			if p and distance < maxdistance then
 				maxdistance = distance
 				targetpos = p.HumanoidRootPart.Position
 			end
 		end
-		
 	end
 	return targetpos
 end
@@ -120,15 +132,14 @@ end
 
 
 
-
-
 UIS.InputBegan:Connect(function(key, a)
 	if a or key.KeyCode ~= Enum.KeyCode[hotkey.Text] then return end
+		
 		if enabled == false then
 			enabled = true
 		else
 			enabled = false
-	end
+		end
 	
 	while enabled == false do
 		target = ClosestEnemy()
@@ -159,5 +170,13 @@ UIS.InputBegan:Connect(function(input)
 			focused_textbox.Text = input.KeyCode.Name 
 			focused_textbox:ReleaseFocus() 
 		end
+	end
+end)
+
+teams.Activated:Connect(function()
+	if teams.Text == "No Teams" then
+		teams.Text = "Teams"
+	else
+		teams.Text = "No Teams"
 	end
 end)
