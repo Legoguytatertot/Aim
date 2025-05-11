@@ -127,7 +127,7 @@ local function ClosestEnemy()
 		end
 	end
 	
-	if targetpos then
+	if targetpos ~= nil then
 		return targetpos
 	end
 end
