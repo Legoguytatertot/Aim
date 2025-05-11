@@ -108,7 +108,7 @@ local function ClosestEnemy()
 	
 	
 	for _, rigs in pairs(Players:GetPlayers()) do
-		if rigs.Name ~= player.Character.Name and rigs.Character:FindFirstChild("HumanoidRootPart") then
+		if rigs.Name ~= player.Character.Name and rigs.Character:FindFirstChild("HumanoidRootPart") and not rigs.Character.Humanoid.Died then
 				
 			local p = rigs.Character
 		
@@ -136,6 +136,7 @@ end
 
 
 UIS.InputBegan:Connect(function(key, a)
+	if hotkey.Text == "NO HOTKEY" then return end
 	if a or key.KeyCode ~= Enum.KeyCode[hotkey.Text] then return end
 		
 		if enabled == false then
