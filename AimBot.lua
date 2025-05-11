@@ -17,6 +17,7 @@ local title = Instance.new("TextLabel")
 local explain = Instance.new("TextLabel")
 local ex2 = Instance.new("TextLabel")
 local st = Instance.new("TextBox")
+local hotkey = Instance.new("TextBox")
 local drag = Instance.new("UIDragDetector")
 local strength = nil
 
@@ -24,42 +25,52 @@ local function Setup()
 	
 	
 	
-gui.Name = "Aim"
-gui.Parent = player.PlayerGui
-frame.Draggable = true
-frame.Size = UDim2.new(0.2, 0,0.3, 0)
-frame.Position = UDim2.new(0.05, 0,0.3, 0)
-frame.Style = "RobloxRound"
+	gui.Name = "Aim"
+	gui.Parent = player.PlayerGui
+	frame.Draggable = true
+	frame.Size = UDim2.new(0.2, 0,0.3, 0)
+	frame.Position = UDim2.new(0.05, 0,0.3, 0)
+	frame.Style = "RobloxRound"
 
-title.Size = UDim2.new(1, 0,0.2, 0)
-title.TextScaled = true
-title.RichText = true
-title.Text = "AIMBOT"
-title.Parent = frame
+	title.Size = UDim2.new(1, 0,0.2, 0)
+	title.TextScaled = true
+	title.RichText = true
+	title.Text = "AIMBOT"
+	title.Parent = frame
 
-explain.Size = UDim2.new(.5, 0,0.25, 0)
-explain.Position = UDim2.new(0, 0,0.3, 0)
-explain.TextScaled = true
-explain.RichText = true
-explain.Text = "Strength Of Aimbot"
-explain.Parent = frame
+	explain.Size = UDim2.new(.5, 0,0.25, 0)
+	explain.Position = UDim2.new(0, 0,0.3, 0)
+	explain.TextScaled = true
+	explain.RichText = true
+	explain.Text = "Strength Of Aimbot"
+	explain.Parent = frame
 
-st.Size = UDim2.new(.5, 0,0.2, 0)
-st.Position = UDim2.new(0.5, 0,0.3, 0)
-st.TextScaled = true
-st.RichText = true
-st.Text = ".5"
-st.Parent = frame
+	st.Size = UDim2.new(.5, 0,0.2, 0)
+	st.Position = UDim2.new(0.5, 0,0.3, 0)
+	st.TextScaled = true
+	st.RichText = true
+	st.Text = ".5"
+	st.Parent = frame
 
-ex2.Size = UDim2.new(1, 0,0.25, 0)
-ex2.Position = UDim2.new(0, 0,0.7, 0)
-ex2.TextScaled = true
-ex2.RichText = true
-ex2.Text = "Press (F) for aimbot"
-ex2.Parent = frame
+	ex2.Size = UDim2.new(.3, 0,0.25, 0)
+	ex2.Position = UDim2.new(0, 0,0.7, 0)
+	ex2.TextScaled = true
+	ex2.RichText = true
+	ex2.Text = "Hotkey"
+	ex2.Parent = frame
 
-drag.Parent = frame
-frame.Parent = gui
+	hotkey.Size = UDim2.new(.25, 0,0.25, 0)
+	hotkey.Position = UDim2.new(0.35, 0,0.7, 0)
+	hotkey.TextScaled = true
+	hotkey.RichText = true
+	hotkey.Text = "F"
+	hotkey.Name = "HotKey"
+	hotkey.Parent = frame
+
+
+
+	drag.Parent = frame
+	frame.Parent = gui
 
 end
 
@@ -112,7 +123,7 @@ end
 
 
 UIS.InputBegan:Connect(function(key, a)
-	if a or key.KeyCode ~= Enum.KeyCode.F then return end
+	if a or key.KeyCode ~= Enum.KeyCode[hotkey.Text] then return end
 		if enabled == false then
 			enabled = true
 		else
@@ -135,5 +146,18 @@ UIS.InputBegan:Connect(function(key, a)
 			
 		end
 		task.wait()
+	end
+end)
+
+UIS.InputBegan:Connect(function(input)
+	local focused_textbox = UIS:GetFocusedTextBox()
+	
+	
+	
+		if input.UserInputType == Enum.UserInputType.Keyboard then
+			if focused_textbox ~= nil and focused_textbox.Name == "HotKey" then
+			focused_textbox.Text = input.KeyCode.Name 
+			focused_textbox:ReleaseFocus() 
+		end
 	end
 end)
