@@ -126,7 +126,10 @@ local function ClosestEnemy()
 			end
 		end
 	end
-	return targetpos
+	
+	if targetpos then
+		return targetpos
+	end
 end
 
 
