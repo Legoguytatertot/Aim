@@ -111,15 +111,9 @@ local function ClosestEnemy()
 	local targetpos = nil
 	local distance = nil
 	local maxdistance = math.huge
-
-
-	if not rigs.Character.Humanoid then
-			enabled = false
-			task.wait()
-			enabled = true
-		end
 	
 	for _, rigs in pairs(Players:GetPlayers()) do
+		
 		if rigs.Name ~= player.Character.Name and rigs.Character and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid and rigs.Character.Humanoid.Health >= 1 then
 				
 			local p = rigs.Character
@@ -137,6 +131,11 @@ local function ClosestEnemy()
 				maxdistance = distance
 				targetpos = p.HumanoidRootPart
 			end
+			
+		else
+			enabled = false 
+			task.wait()
+			enabled = true 
 		end
 	end
 	
