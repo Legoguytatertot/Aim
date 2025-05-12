@@ -131,9 +131,6 @@ local function ClosestEnemy()
 				maxdistance = distance
 				targetpos = p.HumanoidRootPart
 			end
-			
-		else
-			warn("NO")
 		end
 	end
 	
@@ -169,7 +166,8 @@ UIS.InputBegan:Connect(function(key, a)
 
 			local newLookVector = camera.CFrame.LookVector:Lerp(direction, strength)
 			camera.CFrame = CFrame.lookAt(camera.CFrame.Position, camera.CFrame.Position + newLookVector)
-			
+		else
+			warn("No Humanoid")
 		end
 		task.wait()
 	end
