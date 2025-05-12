@@ -26,7 +26,7 @@ local st = Instance.new("TextBox")
 local hotkey = Instance.new("TextBox")
 local teams = Instance.new("TextButton")
 local drag = Instance.new("UIDragDetector")
-local strength = .5
+local strength = nil
 
 local function Setup()
 	
@@ -93,6 +93,7 @@ Setup()
 
 task.wait(Setup())
 
+st.Text = ".5"
 
 st.Changed:Connect(function()
 	if type(tonumber(st.Text)) == "number" then
@@ -113,17 +114,18 @@ local function ClosestEnemy()
 	
 	
 	for _, rigs in pairs(Players:GetPlayers()) do
-		if rigs.Name ~= player.Character.Name and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid.Health >= 1 then
+		if rigs.Name ~= player.Character.Name and rigs.Character and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid.Health >= 1 then
 				
-			local p = nil
+			local p = rigs.Character
 		
 			if teams.Text == "Teams" and rigs.Team == player.Team then
 				p = nil
-			else
-				p = rigs.Character
+			end
+			if p then
 				distance = (p.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
 			end
-
+			
+			
 			
 			if p and distance < maxdistance then
 				maxdistance = distance
@@ -146,13 +148,14 @@ UIS.InputBegan:Connect(function(key, a)
 		
 		if enabled == false then
 			enabled = true
+			print(enabled)
 		else
 			enabled = false
+			print(enabled)
 		end
 	
 	while enabled == true do
 		target = ClosestEnemy()
-		
 
 		
 		if target then
