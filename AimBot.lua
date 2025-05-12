@@ -151,7 +151,7 @@ UIS.InputBegan:Connect(function(key, a)
 			enabled = false
 		end
 	
-	while enabled == false do
+	while enabled == true do
 		target = ClosestEnemy()
 		
 
