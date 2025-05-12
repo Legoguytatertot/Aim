@@ -108,14 +108,13 @@ end)
 
 
 local function ClosestEnemy()
-	local targeting = nil
 	local targetpos = nil
 	local distance = nil
 	local maxdistance = math.huge
 	
 	
 	for _, rigs in pairs(Players:GetPlayers()) do
-		if rigs.Name ~= player.Character.Name and rigs.Character and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid and rigs.Character.Humanoid >= 1 then
+		if rigs.Name ~= player.Character.Name and rigs.Character and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid and rigs.Character.Humanoid.Health >= 1 then
 				
 			local p = rigs.Character
 		
@@ -159,7 +158,7 @@ UIS.InputBegan:Connect(function(key, a)
 		target = ClosestEnemy()
 
 		
-		if target and target.Humanoid then
+		if target and target.Parent.Humanoid then
 			local targetPos = target.Position
 			local cameraPos = camera.CFrame.Position
 			local direction = (targetPos - cameraPos).Unit
