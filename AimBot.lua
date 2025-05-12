@@ -108,6 +108,7 @@ end)
 
 
 local function ClosestEnemy()
+	local targeting = nil
 	local targetpos = nil
 	local distance = nil
 	local maxdistance = math.huge
@@ -129,7 +130,7 @@ local function ClosestEnemy()
 			
 			if p and distance < maxdistance then
 				maxdistance = distance
-				targetpos = p.HumanoidRootPart.Position
+				targetpos = p.HumanoidRootPart
 			end
 		end
 	end
@@ -158,8 +159,8 @@ UIS.InputBegan:Connect(function(key, a)
 		target = ClosestEnemy()
 
 		
-		if target then
-			local targetPos = target
+		if target and target.Humanoid then
+			local targetPos = target.Position
 			local cameraPos = camera.CFrame.Position
 			local direction = (targetPos - cameraPos).Unit
 
