@@ -26,7 +26,7 @@ local st = Instance.new("TextBox")
 local hotkey = Instance.new("TextBox")
 local teams = Instance.new("TextButton")
 local drag = Instance.new("UIDragDetector")
-local strength = nil
+local strength = .5
 
 local function Setup()
 	
@@ -94,7 +94,6 @@ Setup()
 task.wait(Setup())
 
 
-
 st.Changed:Connect(function()
 	if type(tonumber(st.Text)) == "number" then
 		strength = tonumber(st.Text)
@@ -116,12 +115,12 @@ local function ClosestEnemy()
 	for _, rigs in pairs(Players:GetPlayers()) do
 		if rigs.Name ~= player.Character.Name and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid.Health >= 1 then
 				
-			local p = rigs.Character
+			local p = nil
 		
 			if teams.Text == "Teams" and rigs.Team == player.Team then
 				p = nil
-			end
-			if p then
+			else
+				p = rigs.Character
 				distance = (p.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
 			end
 
