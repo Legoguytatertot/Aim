@@ -133,9 +133,7 @@ local function ClosestEnemy()
 			end
 			
 		else
-			enabled = false 
-			task.wait()
-			enabled = true 
+			warn("NO")
 		end
 	end
 	
