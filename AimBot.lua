@@ -114,7 +114,12 @@ local function ClosestEnemy()
 	
 	for _, rigs in pairs(Players:GetPlayers()) do
 		
-		if rigs.Name ~= player.Character.Name and rigs.Character and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid and rigs.Character.Humanoid.Health >= 1 then
+		
+		
+		
+		
+		
+		if rigs.Name ~= player.Character.Name and rigs.Character and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character:WaitForChild("Humanoid") and rigs.Character.Humanoid.Health >= 1 then
 				
 			local p = rigs.Character
 		
