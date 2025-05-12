@@ -1,6 +1,12 @@
+
+
+
 local UIS = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
+
+
+
 local camera = workspace.CurrentCamera
 local enabled = nil
 local target = nil
@@ -25,7 +31,7 @@ local strength = nil
 local function Setup()
 	
 	
-	
+	gui.ResetOnSpawn = false
 	gui.Name = "Aim"
 	gui.Parent = player.PlayerGui
 	frame.Draggable = true
@@ -108,7 +114,7 @@ local function ClosestEnemy()
 	
 	
 	for _, rigs in pairs(Players:GetPlayers()) do
-		if rigs.Name ~= player.Character.Name and rigs.Character:FindFirstChild("HumanoidRootPart") and not rigs.Character.Humanoid.Died then
+		if rigs.Name ~= player.Character.Name and rigs.Character:FindFirstChild("HumanoidRootPart") and rigs.Character.Humanoid.Health <= 1 then
 				
 			local p = rigs.Character
 		
@@ -183,4 +189,11 @@ teams.Activated:Connect(function()
 	else
 		teams.Text = "No Teams"
 	end
+end)
+
+wait(1)
+
+local char = player.Character
+char.Humanoid.Died:Connect(function()
+	Setup()
 end)
